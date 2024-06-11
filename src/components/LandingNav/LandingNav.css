@@ -39,3 +39,8 @@
         padding-right: 15px !important;
     }
 }
+
+.logo-container {
+    display: flex;
+    align-items: center;
+  }
