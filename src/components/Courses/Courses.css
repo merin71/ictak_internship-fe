@@ -1,16 +1,15 @@
-/* Style for the entire course management container */
+/* entier content*/
 div {
     font-family: Arial, sans-serif;
-    
+  
   }
   
-  /* Style for the course management heading */
   h2 {
     color: #014f86;
     margin-bottom: 20px;
   }
   
-  /* Style for the OU filter dropdown */
+  /*  OU filter dropdown */
   select {
     padding: 10px;
     margin-bottom: 20px;

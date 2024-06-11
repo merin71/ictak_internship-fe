@@ -18,10 +18,11 @@
         .signin-title{
             text-align: left;
             h3{
-                color: var(--exp-primary-color);
+                color: #014f86
+
             }
             h6{
-                color: rgb(84, 78, 78);
+                color: #014f86
             }
         }
         .checkbox {

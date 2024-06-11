@@ -7,18 +7,26 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+ 
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isEmailFormatValid, setIsEmailFormatValid] = useState(true);
   const [isPasswordLengthValid, setIsPasswordLengthValid] = useState(true);
   const [isEmailExist, setIsEmailExist] = useState(false);
+  const [isRoleValid, setIsRoleValid] = useState(true);
   const [alert, setAlert] = useState("");
   const navigate = useNavigate();
+  const roleMappings = {
+    participant: "PARTICIPANT",
+    trainer: "TRAINER",
+    iqa: "IQA"
+  };
   const [input, setInput] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
+    role:""
   });
 
   const inputHandler = (event) => {
@@ -46,6 +54,9 @@ const SignUp = () => {
       setIsPasswordValid(event.target.value !== "");
       setIsPasswordLengthValid(event.target.value.length >= 8);
     }
+    if (event.target.name === "role") {
+      setIsRoleValid(event.target.value !== ""); // Validate role selection
+    }
   };
 
   const validateEmail = (email) => {
@@ -58,28 +69,41 @@ const SignUp = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    if(input.name === "" || input.email === "" || input.password === "") {
+    if (input.name === "" || input.email === "" || input.password === "" || input.role === "") {
       input.name === "" && setIsNameValid(false);
       input.email === "" && setIsEmailValid(false);
       input.password === "" && setIsPasswordValid(false);
+      input.role === "" && setIsRoleValid(false);
     } else {
-      if (isNameValid && isEmailValid && !isEmailExist && isPasswordValid) {
-        axios.post("http://localhost:8080/signup", input).then(
-          (response) => {
-            console.log(response.data);
-            if (response.data.status === "success") {
-              sessionStorage.setItem("id", response.data.id);
-              sessionStorage.setItem("name", response.data.name);
-              navigate("/home");
+      const mappedRole = roleMappings[input.role.toLowerCase()];
+  
+      if (mappedRole) {
+        // If a valid mapping exists, update the role field in the input object
+        const updatedInput = { ...input, role: mappedRole };
+  
+        if (isNameValid && isEmailValid && !isEmailExist && isPasswordValid && isRoleValid) {
+          axios.post("http://localhost:8080/signup", updatedInput).then(
+            (response) => {
+              console.log(response.data);
+              if (response.data.status === "success") {
+                sessionStorage.setItem("id", response.data.id);
+                sessionStorage.setItem("name", response.data.name);
+                sessionStorage.setItem("role", response.data.role);
+                navigate(`/${response.data.role.toLowerCase()}-home`);
+                // navigate("/home");
+              }
             }
-          }
-        ).catch((err) => {
-          console.log(err);
-          setAlert(err.message);
-          setTimeout(() => {
-            setAlert("");
-          }, 3000);
-        });
+          ).catch((err) => {
+            console.log(err);
+            setAlert(err.message);
+            setTimeout(() => {
+              setAlert("");
+            }, 3000);
+          });
+        }
+      } else {
+        // If no valid mapping exists, set an error for the role
+        setIsRoleValid(false);
       }
     }
   };
@@ -100,7 +124,7 @@ const SignUp = () => {
               <h3 style={{ textAlign: 'left', color: '#014f86'}}>Welcome!</h3>
               <Box className='box-signup-form' component="form" noValidate sx={{ mt: 1 }}>
               <div>
-                {/* <Form.Group id="role">
+                <Form.Group id="role">
                    <Form.Label>Role</Form.Label>
                     <Form.Select name="role" value={input.role} onChange={inputHandler}>
                       <option value="">Select Role</option>
@@ -108,7 +132,8 @@ const SignUp = () => {
                       <option value="trainer">Trainer</option>
                       <option value="iqa">IQA</option>
                      </Form.Select>
-                </Form.Group> */}
+                </Form.Group>
+               {!isRoleValid && <FormHelperText error>Please select a role.</FormHelperText>}
                 </div>
                 <TextField className='signup-field'
                   error={!isNameValid}
@@ -168,7 +193,7 @@ const SignUp = () => {
                   Register
                 </Button>
                 <div className='login'>
-                  <h5>Already have an account? <a href="/">Login</a></h5>
+                  <h5>Already have an account? <a href="/login">Login</a></h5>
                 </div>
               </Box>
             </Box>

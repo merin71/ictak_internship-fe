@@ -23,23 +23,6 @@ const LandingPage = () => {
               {/* <Button variant="contained" color="primary" component={Link} to="/about-us" sx={{ mt: 2 }} >
                 Know more 
               </Button> */}
-              <div className='navigation-buttons'>
-                <Button color="inherit">
-                  <Link style={{ textDecoration: 'none', color: 'black' }} to={'/participant'}>
-                    Participant
-                  </Link>
-                </Button>
-                <Button color="inherit">
-                  <Link style={{ textDecoration: 'none', color: 'black' }} to={'/trainer'}>
-                    Trainer
-                  </Link>
-                </Button>
-                <Button color="inherit">
-                  <Link style={{ textDecoration: 'none', color: 'black' }} to={'/iqa'}>
-                    IQA
-                  </Link>
-                </Button>
-              </div>
               
             </Box>
           </Grid>

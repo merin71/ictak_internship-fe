@@ -5,6 +5,7 @@ import { Copyright} from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
 import axios from 'axios';
+import Footer from '../Footer/Footer';
 
 const SignIn = () => {
   const [isEmailFormatValid, setIsEmailFormatValid] = useState(true);
@@ -44,8 +45,8 @@ const SignIn = () => {
             // sessionStorage.setItem("token", response.data.token);
             sessionStorage.setItem("name", response.data.name);
             sessionStorage.setItem("email", response.data.email);
-            // sessionStorage.setItem("isAdmin", response.data.isAdmin);
-            navigate("/home");
+            navigate(`/${response.data.role.toLowerCase()}-home`);
+            // navigate("/home");
           } else {
             setAlert("Invalid credentials!");
             setTimeout(() => {
@@ -107,9 +108,6 @@ const SignIn = () => {
                 value = {input.password}
                 onChange={inputHandler}
               />
-          {/* <div className='forgot m-2' >
-              <h6><a href="/forgotpassword">Forgot Password ?</a></h6>
-          </div>  */}
               
               <Button className='signin-button'
                 type="submit"

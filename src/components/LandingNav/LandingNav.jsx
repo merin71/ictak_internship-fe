@@ -42,11 +42,9 @@ const LandingNav = () => {
           </Box>
 
           < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/about-us'}>About</Link></Button>
-          {/* < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/feedback'}>Feed Back Form</Link></Button> */}
-          < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/courses'}>Courses</Link></Button>
-          < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/participant'}>Participant</Link></Button>
-          < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/trainer'}>Training Cordinator</Link></Button>
-          < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/iqa'}>IQA</Link></Button>
+          < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/login'}>Sign In</Link></Button>
+          < Button color="inherit"><Link style={{textDecoration:'none',color:'black'}} to={'/signup'}>Sign Up</Link></Button>
+          
         </Toolbar>
       </AppBar>
     </Box>
